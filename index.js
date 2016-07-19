@@ -1,15 +1,17 @@
 const express = require('express');
 const products = require('./products.json');
 const _ = require('lodash');
+const cors = require('cors');
 
 const app = express();
+app.use(cors());
 
 app.get('/products', function(req, res, next) {
   res.status(200).send(products)
 })
 
 app.get('/products/:id', function(req, res, next) {
-  let target = _.filter(products, product => {
+  let target = _.find(products, product => {
     return product.id === req.params.id;
   });
   if (target) {
