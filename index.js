@@ -9,7 +9,9 @@ app.get('/products', function(req, res, next) {
 })
 
 app.get('/products/:id', function(req, res, next) {
-  let target = _.get(products, req.params.id);
+  let target = _.filter(products, product => {
+    return product.id === req.params.id;
+  });
   if (target) {
     return res.status(200).send(target);
   } else {
