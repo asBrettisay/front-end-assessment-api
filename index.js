@@ -1,6 +1,7 @@
 const express = require('express');
 const products = require('./products.json');
 const _ = require('lodash');
+const pets = require('./pets.json');
 const cors = require('cors');
 
 const app = express();
@@ -18,6 +19,22 @@ app.get('/products/:id', function(req, res, next) {
     return res.status(200).send(target);
   } else {
     return res.status(404).send({message: "Item not found!"})
+  }
+  return res.sendStatus(500);
+})
+
+app.get('/pets', function(req, res, next) {
+  res.status(200).send(pets)
+})
+
+app.get('/pets/:id', function(req, res, next) {
+  let target = _.find(pets, pet => {
+    return pet.id === req.params.id;
+  });
+  if (target) {
+    return res.status(200).send(target);
+  } else {
+    return res.status(404).send({message: "Pet not found!"})
   }
   return res.sendStatus(500);
 })
